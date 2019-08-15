@@ -1,0 +1,18 @@
+.pinned_item {
+    min-width: 155px;
+    width: 111px;
+    height: 100%;
+    margin:0 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.pin_logo {
+    width: 30px;
+    position: absolute;
+    top: -4px;
+    right: -18px;
+    z-index: 9999;
+}

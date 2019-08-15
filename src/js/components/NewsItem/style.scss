@@ -1,7 +1,7 @@
 
 .feed_item {
     margin:15px 0;
-    box-shadow: 0px 0px 11px -2px #826e6e;
+    box-shadow: 0px 0px 10px 5px #2f1f1f;
     cursor: pointer;
 
     * {
@@ -15,4 +15,30 @@
 
 .category {
     display: flex;
+}
+
+.unread-news {
+    width: 25px;
+}
+
+.feed_item_read {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.unread {
+    display: block;
+    padding: 5px;
+    border-radius: 50%;
+    background: #08f908;
+    border: 1px solid #cccccc;
+}
+
+.read {
+    display: block;
+    padding: 5px;
+    border-radius: 50%;
+    background: orange;
+    border: 1px solid #cccccc;
 }
