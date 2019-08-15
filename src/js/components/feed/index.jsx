@@ -1,22 +1,23 @@
 import React, {Component} from 'react'
-import axios from 'axios';
-
+import NewsItem from 'js/components/NewsItem';
+import './style.scss';
 
 class Feed extends Component {
-
-    constructor(props){
-        super(props);
-        this.state = {
-            feed:{}
-        }
-    }
-
 
     render(){
     const { news } = this.props;
         return (
-            <div>
-                Feed
+            <div className='feed'>
+                 {
+                    news.map((item, i)=>{
+                        return (
+                            <NewsItem
+                                key = { i.toString()}
+                                news= {item}
+                            />
+                        )
+                    })
+                 }
             </div>
         )
     }
