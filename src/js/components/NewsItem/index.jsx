@@ -1,5 +1,6 @@
 import React  from 'react'
-import { Card, Icon } from 'semantic-ui-react';
+import { Card, Icon, Image } from 'semantic-ui-react';
+import Logo from 'assets/images/logo.jpg'
 import './style.scss';
 // import axios from 'axios';
 
@@ -11,7 +12,9 @@ class NewsItem extends React.Component {
     const {news} = this.props;
     return (
         <div className='feed_item'>
+           
             <Card color='violet'>
+                <Image src={news.fields.thumbnail} wrapped ui={false} />
                 <Card.Content>
                 <Card.Header>{news.webTitle}</Card.Header>
                 <div className='category'>

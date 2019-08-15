@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, {Component} from 'react';
 import axios from 'axios';
 import Feed from 'js/components/Feed';
 
@@ -32,12 +32,14 @@ class Home extends Component {
 
     async loadNews(){
         const { page,news } = this.state ;
+        // const url = 'https://content.guardianapis.com/search';
         const url = 'https://content.guardianapis.com/search';
         const headers = {
             'Content-Type': 'application/json'
           }
         const params = {
-             'api-key': 'f7224cda-042a-4939-b230-615e9b4cc84f',
+             'api-key': 'test',
+             'show-fields':'all',
              'page':page
         }
        
