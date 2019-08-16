@@ -1,7 +1,7 @@
 .pinned_item {
     min-width: 155px;
     width: 111px;
-    height: 100%;
+    height: max-content;
     margin:0 15px;
     display: flex;
     justify-content: center;
@@ -9,10 +9,31 @@
     position: relative;
 }
 
-.pin_logo {
+.pin_icon {
     width: 30px;
     position: absolute;
     top: -4px;
     right: -18px;
     z-index: 9999;
+    animation: shake 300ms infinite;
+    transition: 400ms all ease;
+}
+
+.hide_icon {
+    width: 40px;
+    position: absolute;
+    top: -16px;
+    right: -40px;
+    transform: rotate(20deg);
+    transition: 400ms all ease;
+}
+
+@keyframes shake {
+    from {
+        transform:rotate(-5deg);
+    }
+
+    to {
+        transform:rotate(5deg);
+    }
 }
