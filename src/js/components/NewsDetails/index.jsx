@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { Button } from 'semantic-ui-react';
 import ReactHtmlParser from 'react-html-parser';
@@ -16,6 +17,7 @@ class NewsDetails extends Component {
             newData:[],
             isLoading:true,
             pinned:false,
+            pinnedNews:[],
         }
     }
 
@@ -38,7 +40,7 @@ class NewsDetails extends Component {
         .then(data => {
             const { response } = data;
             const { content } = response;
-            const isPinned =  localStorage.getItem(`pinned${id}`); 
+            const isPinned = this.isPinned(id);
             setTimeout(()=>{
                 this.setState({
                     newData:content,
@@ -54,10 +56,36 @@ class NewsDetails extends Component {
         })
     }
 
+    isPinned = (id) => {
+        const pinnedNews = localStorage.getItem('pinnedNews');
+        let isPinned = false;
+        let pinnedNewsParse;
+
+        if(pinnedNews && pinnedNews.length){
+            pinnedNewsParse = JSON.parse(pinnedNews);
+            pinnedNewsParse.forEach(item=>{
+                if(item === id){
+                    isPinned = true;
+                }
+            })
+        }
+        return isPinned;
+    }
+
+
+
     pinToHomePage = () => {
         const { id } = this.state;
-        localStorage.setItem(`pinned${id}`,id); 
-        console.log(`pinned${id}`,'`pinned${id}`');
+        const pinnedNews = localStorage.getItem('pinnedNews');
+        let pinnedNewsParse = [];
+        if( pinnedNews ) {
+            pinnedNewsParse = JSON.parse(pinnedNews);
+            pinnedNewsParse.unshift(id);      
+        } else {
+            pinnedNewsParse.unshift(id);
+        }
+        const pinnedNewsJSON = JSON.stringify(pinnedNewsParse);
+        localStorage.setItem('pinnedNews',pinnedNewsJSON);
         this.setState({
             isPinned:true,
         })
@@ -65,18 +93,29 @@ class NewsDetails extends Component {
 
     unPinFromHomepage = () => {
         const { id } = this.state;
-        localStorage.removeItem(`pinned${id}`);
-        this.setState({
-            isPinned:false,
-        })
+        const pinnedNews = localStorage.getItem('pinnedNews');
+        let pinnedNewsParse = [];
+        if ( pinnedNews && pinnedNews ) {
+            pinnedNewsParse = JSON.parse(pinnedNews);
+            pinnedNewsParse = pinnedNewsParse.filter(item=>{
+                return item !== id
+            });
+            const pinnedNewsJSON = JSON.stringify(pinnedNewsParse);
+            localStorage.setItem('pinnedNews',pinnedNewsJSON);
+            this.setState({
+                isPinned:false,
+            })
+        }   
     }
+
+
     render(){
-        const {id , newData, isLoading, isPinned} = this.state;
+        const { newData, isLoading, isPinned} = this.state;
         const { fields:details } = newData;
 
         if( isLoading ) {
             return (
-                <div class='initialLoader'>
+                <div className='initialLoader'>
                     <img src={SoloLearnLoader} alt=""/>
                 </div>
             )
@@ -85,9 +124,7 @@ class NewsDetails extends Component {
             return null;
         }
 
-
-        return (
-            
+        return (      
             <div className='news_details'>
                 <div className="news_details_wrapper">
                     <span className='news_details_header'>
@@ -105,7 +142,7 @@ class NewsDetails extends Component {
                     </div>
 
                     <div className='news_details_content'>
-                        <span>   
+                        <span className='news_details_published_date'>   
                             <i>
                             Published date:&ensp;
                             {
@@ -142,8 +179,19 @@ class NewsDetails extends Component {
                                 </i>
                             </span>
                             <div>
+                            <Link to='/'>
+                                <Button color='green'>
+                                    Go Back
+                                </Button>
+                            </Link>
+                           
                             <Button color='violet'>
-                                <a className='news_details_visit_webpage' target='_blank' href={newData.webUrl}>
+                                <a
+                                    rel="noopener noreferrer"
+                                    className='news_details_visit_webpage'
+                                    target='_blank' 
+                                    href={newData.webUrl}
+                                 >
                                     Visit webpage
                                 </a> 
                             </Button>

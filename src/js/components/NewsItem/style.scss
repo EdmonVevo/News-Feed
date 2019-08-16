@@ -1,9 +1,22 @@
 
 .feed_item {
-    margin:15px 0;
+    margin:15px;
     box-shadow: 0px 0px 10px 5px #2f1f1f;
+    position: relative;
     cursor: pointer;
-
+    .pinned_helper {
+        display: flex;
+        width: max-content;
+        background: #87ca0a;
+        color: #fff;
+        transform: rotate(90deg);
+        position: absolute;
+        z-index: 20;
+        padding: 2px 5px;
+        right: -32px;
+        top: 27px;
+        border-radius: 5px;
+    }
     * {
         -moz-user-select: none;
         -webkit-user-select: none; 
@@ -25,6 +38,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: relative;
 }
 
 .unread {
@@ -41,4 +55,15 @@
     border-radius: 50%;
     background: orange;
     border: 1px solid #cccccc;
+}
+
+.new_item {
+    color: #089600;
+    font-weight: bold;
+    font-size: 20px;
+    transform: rotate(30deg);
+    position: absolute;
+    right: 36px;
+    top: -17px;
+    text-shadow: 2px 2px 25px black;
 }
