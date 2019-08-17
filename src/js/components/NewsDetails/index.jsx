@@ -1,10 +1,14 @@
 import React, {Component} from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+
 import { Button } from 'semantic-ui-react';
 import ReactHtmlParser from 'react-html-parser';
+
+import { getSingleNewsRequest } from 'js/api';
+
 import Sololearn from 'assets/images/sololearn.jpg';
 import SoloLearnLoader from 'assets/images/sololearn-loader.png';
+
 import './style.scss';
 
 class NewsDetails extends Component {
@@ -24,34 +28,17 @@ class NewsDetails extends Component {
    async componentDidMount(){
 
         const { id } = this.state;
-        const url = `https://content.guardianapis.com/${id}` ;
-        const headers = {
-            'Content-Type': 'application/json'
-          }
-
-        const apiKey = 'f7224cda-042a-4939-b230-615e9b4cc84f';
-          // const apiKey = 'test';
-        const params = {
-             'api-key': apiKey,
-             'show-fields':'all',
-        };
-        await axios.get(url,{headers:headers,params:params})
-        .then(response => response.data )
-        .then(data => {
-            const { response } = data;
-            const { content } = response;
-            const isPinned = this.isPinned(id);
-            setTimeout(()=>{
-                this.setState({
-                    newData:content,
-                    isLoading:false,
-                    isPinned: isPinned ? true : false,
-                },()=>{
-                   localStorage.setItem(id,true); 
-                })
-            },300);
-    
-        }).catch(err =>{
+        getSingleNewsRequest(id).then(res=>{
+                const content = res;
+                const isPinned = this.isPinned(id);
+                setTimeout(()=>{
+                    this.setState({
+                        newData:content,
+                        isLoading:false,
+                        isPinned: !!isPinned
+                    } , localStorage.setItem(id,true))
+                },300);
+        }).catch(err=>{
             console.log(err);
         })
     }
@@ -63,11 +50,7 @@ class NewsDetails extends Component {
 
         if(pinnedNews && pinnedNews.length){
             pinnedNewsParse = JSON.parse(pinnedNews);
-            pinnedNewsParse.forEach(item=>{
-                if(item === id){
-                    isPinned = true;
-                }
-            })
+            if(pinnedNewsParse.indexOf(id) !== -1) isPinned = true;
         }
         return isPinned;
     }
@@ -78,17 +61,11 @@ class NewsDetails extends Component {
         const { id } = this.state;
         const pinnedNews = localStorage.getItem('pinnedNews');
         let pinnedNewsParse = [];
-        if( pinnedNews ) {
-            pinnedNewsParse = JSON.parse(pinnedNews);
-            pinnedNewsParse.unshift(id);      
-        } else {
-            pinnedNewsParse.unshift(id);
-        }
+        if ( pinnedNews ) pinnedNewsParse = JSON.parse(pinnedNews);      
+        pinnedNewsParse.unshift(id);     
         const pinnedNewsJSON = JSON.stringify(pinnedNewsParse);
         localStorage.setItem('pinnedNews',pinnedNewsJSON);
-        this.setState({
-            isPinned:true,
-        })
+        this.setState({ isPinned:true })
     }
 
     unPinFromHomepage = () => {
@@ -102,9 +79,7 @@ class NewsDetails extends Component {
             });
             const pinnedNewsJSON = JSON.stringify(pinnedNewsParse);
             localStorage.setItem('pinnedNews',pinnedNewsJSON);
-            this.setState({
-                isPinned:false,
-            })
+            this.setState({ isPinned:false })
         }   
     }
 
@@ -137,10 +112,8 @@ class NewsDetails extends Component {
                             ) : (
                                 <img src={Sololearn} alt=""/>
                             )
-                        }
-                      
+                        }            
                     </div>
-
                     <div className='news_details_content'>
                         <span className='news_details_published_date'>   
                             <i>
@@ -178,7 +151,7 @@ class NewsDetails extends Component {
                                 }
                                 </i>
                             </span>
-                            <div>
+                            <div className='action_buttons'>
                             <Link to='/'>
                                 <Button color='green'>
                                     Go Back
@@ -195,35 +168,26 @@ class NewsDetails extends Component {
                                     Visit webpage
                                 </a> 
                             </Button>
-                            {
-                                !isPinned ? (
-                                    <Button 
-                                        onClick = {this.pinToHomePage}
-                                        color='yellow'>
-                                        Pin to homepage
-                                    </Button>
-                                ) : (
-                                    <Button 
-                                        onClick = {this.unPinFromHomepage}
-                                        color='red'>
-                                        Unpin from homepage
-                                    </Button>
-                                )
-                            }
-                            
-                                <span>
-                                    {
-                                       
-                                    }
-                                </span>
+                                {
+                                    !isPinned ? (
+                                        <Button 
+                                            onClick = {this.pinToHomePage}
+                                            color='yellow'>
+                                            Pin to homepage
+                                        </Button>
+                                    ) : (
+                                        <Button 
+                                            onClick = {this.unPinFromHomepage}
+                                            color='red'>
+                                            Unpin from homepage
+                                        </Button>
+                                    )
+                                }
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        
-            
-            
+            </div>          
         )
     }
 }
