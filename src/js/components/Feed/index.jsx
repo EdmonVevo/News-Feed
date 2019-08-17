@@ -1,27 +1,29 @@
-import React, {Component} from 'react'
+import React  from 'react';
+import PropTypes from 'prop-types';
+
 import NewsItem from 'js/components/NewsItem';
+
 import './style.scss';
 
-class Feed extends Component {
-
-    render(){
-    const { news } = this.props;
-        return (
-            <div className='feed'>
-                 {
-                    news.map((item, i)=>{
-                        return (
-                            <NewsItem
-                                key = { i.toString()}
-                                news= {item}
-                            />
-                        )
-                    })
-                 }
-            </div>
-        )
-    }
+const Feed = ({news}) => {
+    return (
+        <div className='feed'>
+             {
+                news.map((item, i)=>{
+                    return (
+                        <NewsItem
+                            key = { i.toString()}
+                            news= {item}
+                        />
+                    )
+                })
+             }
+        </div>
+    )
 }
 
+Feed.propTypes  = {
+    news: PropTypes.object,
+}
 
 export default Feed;

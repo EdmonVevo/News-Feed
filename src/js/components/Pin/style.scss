@@ -1,11 +1,12 @@
 .pin_container {
     overflow-x: scroll;
-    width: 100%;
+    width: 70%;
     margin: 0 auto;
 }
 .no_pin_container {
-    width: 100%;
+    width: 80%;
     height: 202px;
+    margin: 0 auto;
     background: #00000024;
 }
 .pin_wrapper {
@@ -31,5 +32,12 @@
     span {
         font-size: 36px;
         color: #fff;
+        font-family: 'Lexend Exa', sans-serif;
+    }
+}
+
+@media screen and (max-width:430px) {
+    .pin_container {
+        width: 90%;
     }
 }

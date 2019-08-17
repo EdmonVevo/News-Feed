@@ -24,7 +24,7 @@ const Pin = ({items,unPin}) => {
                     ) : (
                         <div className='no_pinned_news'>
                             <span>
-                                 You have no pinned news
+                                 Pin news to add here
                             </span>
                         </div>
                     )

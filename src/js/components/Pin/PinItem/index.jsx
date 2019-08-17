@@ -2,7 +2,7 @@ import React,{Component}  from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Card, Image } from 'semantic-ui-react';
-import PinImage from 'assets/images/pin.png';
+import PinImage from 'assets/icons/pin.png';
 import Logo from 'assets/images/logo.jpg'
 import './style.scss';
 
@@ -38,8 +38,8 @@ class PinItem extends Component  {
 
 
     render () {
-        const {item}  = this.props;
-        const {removePin} = this.state;
+        const { item }  = this.props;
+        const { removePin } = this.state;
         const { fields } = item;
         return (
             <Link to={`/${item.id}`}>
@@ -69,6 +69,5 @@ class PinItem extends Component  {
 
 PinItem.propTypes  = {
     item: PropTypes.object,
-    unPin: PropTypes.func,
 }
 export default PinItem;

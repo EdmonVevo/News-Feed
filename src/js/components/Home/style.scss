@@ -3,7 +3,35 @@
     overflow: hidden;
     width: 100%; 
 }
+.scroll_top {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60px;
+    height: 60px;
+    background: #5dd2c2;
+    border-radius: 50%;
+    position: fixed;
+    bottom: -150px;
+    right: 20px;
+    box-shadow: 0 0 12px 2px #434c41;
+    transition: 400ms all ease;
+    cursor: pointer;
+    img {
+        width: 30PX;
+    }
+}
 
+.show_scroll_top {
+    bottom: 15px;
+    right: 20px;
+}
+
+.sololearnNewsLogo {
+    width: 160px;
+    margin-left: 15px;
+    margin-top: 15px;
+}
 .initialLoader {
     display: flex;
     justify-content: center;
