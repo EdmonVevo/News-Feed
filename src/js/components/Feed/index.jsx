@@ -23,7 +23,7 @@ const Feed = ({news}) => {
 }
 
 Feed.propTypes  = {
-    news: PropTypes.object,
+    news: PropTypes.array,
 }
 
 export default Feed;

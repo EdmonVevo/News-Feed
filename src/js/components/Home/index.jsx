@@ -31,7 +31,7 @@ class Home extends Component {
     componentDidMount(){
         this.getPinnedNews();
         this.loadNews();
-        this.intervalId = setInterval(this.getFreshNews, 3000);
+        this.intervalId = setInterval(this.getFreshNews, 30000);
         window.addEventListener('scroll', (e) => { this.handleScroll(e)},false);
     }
 
