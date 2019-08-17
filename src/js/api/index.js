@@ -9,9 +9,9 @@ const params = {
     'format':'json',
 }
 
+
 export const getSingleNewsRequest = (id) => {
     const url = `https://content.guardianapis.com/${id}` ;
-
     return new Promise((res,rej)=> {
         axios.get(url,{params:params})
         .then(response => response.data )
@@ -29,15 +29,15 @@ export const getSingleNewsRequest = (id) => {
 export const getPinnedNewsRequest = (id) => {
     const url = 'https://content.guardianapis.com';
     return new Promise((res,rej)=> {
-    axios.get(url+id,{params:params})
-    .then(response => response.data )
-    .then(data => {
-        const { response } = data;
-        const { content } = response;
-        if(content) res(content);
-    }).catch(err =>
-        rej(err)
-    )
+        axios.get(url+id,{params:params})
+        .then(response => response.data )
+        .then(data => {
+            const { response } = data;
+            const { content } = response;
+            if(content) res(content);
+        }).catch(err =>
+            rej(err)
+        )
    })
 }
 

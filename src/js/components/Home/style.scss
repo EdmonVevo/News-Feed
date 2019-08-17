@@ -2,6 +2,19 @@
     background: linear-gradient(45deg,#068895,#2fb5e8, #e9569d, #e6535d,#ee7642,#6ab74f);
     overflow: hidden;
     width: 100%; 
+    min-height: 100vh;
+
+    .no_news {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        span {
+            padding: 100px 0;
+            font-size: 22px;
+            font-weight: bold;
+            color: #212121;
+        }
+    }
 }
 .scroll_top {
     display: flex;

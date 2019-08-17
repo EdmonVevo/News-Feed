@@ -36,7 +36,7 @@ const NewsItem =({ news }) =>{
             }
             <Link to={`/${id}`}>
                 <Card color='violet'>
-                    <Image src={thumbnail || Logo} wrapped ui={false} />
+                    <Image src={ thumbnail || Logo } wrapped ui={false} />
                     <Card.Content>
                     <Card.Header>{webTitle}</Card.Header>
                     <div className='category'>
@@ -63,7 +63,10 @@ const NewsItem =({ news }) =>{
                                 isRead ? (                           
                                     <span className="read"/>
                                 ) : (
-                                    <span className="unread"/>
+                                    <div className='unread_icon'>
+                                         <span className='unread_text'>Unread</span>
+                                         <span className="unread"/>
+                                    </div>
                                 )
                             }
                         </div>

@@ -1,29 +1,28 @@
 import React  from 'react';
-import PropTypes from 'prop-types';
-
+import NewsContext from 'NewsContext';
 import NewsItem from 'js/components/NewsItem';
 
 import './style.scss';
 
-const Feed = ({news}) => {
+const Feed = () => {
     return (
         <div className='feed'>
              {
-                news.map((item, i)=>{
-                    return (
-                        <NewsItem
-                            key = { i.toString()}
-                            news= {item}
-                        />
-                    )
-                })
+                <NewsContext.Consumer>
+                    {({news}) => (
+                            news.map((item, i)=>{
+                            return (
+                                <NewsItem
+                                    key = { i.toString()}
+                                    news= {item}
+                                />
+                            )
+                        })
+                    )}
+                </NewsContext.Consumer>          
              }
         </div>
     )
-}
-
-Feed.propTypes  = {
-    news: PropTypes.array,
 }
 
 export default Feed;

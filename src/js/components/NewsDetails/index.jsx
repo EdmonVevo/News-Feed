@@ -12,15 +12,14 @@ import SoloLearnLoader from 'assets/images/sololearn-loader.png';
 import './style.scss';
 
 class NewsDetails extends Component {
-
-
+    
     constructor(props){
         super(props);
         this.state = {
             id: window.location.pathname,
             newData:[],
             isLoading:true,
-            pinned:false,
+            isPinned:false,
             pinnedNews:[],
         }
     }
@@ -50,12 +49,18 @@ class NewsDetails extends Component {
 
         if(pinnedNews && pinnedNews.length){
             pinnedNewsParse = JSON.parse(pinnedNews);
-            if(pinnedNewsParse.indexOf(id) !== -1) isPinned = true;
+            if(pinnedNewsParse.includes(id)) isPinned = true;
         }
         return isPinned;
     }
 
-
+    savePinLocalStorage = (parsedItem,isPinned) => {
+        const pinnedNewsJSON = JSON.stringify(parsedItem);
+        localStorage.setItem('pinnedNews',pinnedNewsJSON);
+        this.setState({
+            isPinned
+        })
+    }
 
     pinToHomePage = () => {
         const { id } = this.state;
@@ -63,10 +68,9 @@ class NewsDetails extends Component {
         let pinnedNewsParse = [];
         if ( pinnedNews ) pinnedNewsParse = JSON.parse(pinnedNews);      
         pinnedNewsParse.unshift(id);     
-        const pinnedNewsJSON = JSON.stringify(pinnedNewsParse);
-        localStorage.setItem('pinnedNews',pinnedNewsJSON);
-        this.setState({ isPinned:true })
+        this.savePinLocalStorage(pinnedNewsParse,true);
     }
+
 
     unPinFromHomepage = () => {
         const { id } = this.state;
@@ -77,9 +81,7 @@ class NewsDetails extends Component {
             pinnedNewsParse = pinnedNewsParse.filter(item=>{
                 return item !== id
             });
-            const pinnedNewsJSON = JSON.stringify(pinnedNewsParse);
-            localStorage.setItem('pinnedNews',pinnedNewsJSON);
-            this.setState({ isPinned:false })
+            this.savePinLocalStorage(pinnedNewsParse,false);
         }   
     }
 

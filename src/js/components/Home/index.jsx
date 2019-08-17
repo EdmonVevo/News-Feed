@@ -6,13 +6,15 @@ import {getNewsRequest , getPinnedNewsRequest} from 'js/api';
 import Feed from 'js/components/Feed';
 import Pin from 'js/components/Pin';
 import NewsLoader from 'js/components/NewsLoader';
-
+import NewsContext from 'NewsContext';
 import SoloLearnLoader from 'assets/images/sololearn-loader.png';
 import SoloLearnNewsLogo from 'assets/images/sololearn-logo.png';
 import ArrowTopIcon from 'assets/icons/arrow.png';
 
 import 'react-toastify/dist/ReactToastify.css';
-import './style.scss'
+import './style.scss';
+
+
 
 class Home extends Component {
     constructor(props){
@@ -28,10 +30,10 @@ class Home extends Component {
         }
     }
     
-    componentDidMount(){
+    async componentDidMount(){
         this.getPinnedNews();
-        this.loadNews();
-        this.intervalId = setInterval(this.getFreshNews, 30000);
+        await this.loadNews();
+        this.intervalId = setInterval(this.getFreshNews, 3000);
         window.addEventListener('scroll', (e) => { this.handleScroll(e)},false);
     }
 
@@ -48,12 +50,12 @@ class Home extends Component {
         getNewsRequest(page).then(res=>{
             const { results, response } = res;
             const pinnedNewsFromStorage = localStorage.getItem('pinnedNews');
-            let pinnedNewsParse = JSON.parse(pinnedNewsFromStorage);
+            let pinnedNewsParse = JSON.parse(pinnedNewsFromStorage) || [];
             // CHECK PINNED NEWS FOR FEED
             const allNews = [...news,...results];
             allNews.forEach(news=>{
-                const isRead = localStorage.getItem(`/${news.id}`);        
-                news.isPinned = !!(pinnedNewsParse.indexOf(`/${news.id}`) !== -1);
+                const isRead = localStorage.getItem(`/${news.id}`);    
+                news.isPinned = pinnedNewsParse.includes(`/${news.id}`);
                 news.isRead = !!isRead;
             })   
             this.setState({
@@ -90,10 +92,10 @@ class Home extends Component {
 
     // GET FRESH NEWS FOR 30 MINUTES UPDATE
     getFreshNews = () => {
-        const { page,total } = this.state ;
+        let { page,total } = this.state ;
         getNewsRequest(page).then(res=>{
             const { results, response } = res;
-            console.log(response.total,total);
+            total = total == null ? response.total : total;
             if(response.total - total > 0){
                 const newsCount = response.total - total;
                 const allNews = [...this.state.news];
@@ -210,29 +212,36 @@ class Home extends Component {
             )
         }
         
-        return (
-            <div className='container'>
-                <ToastContainer />
-                <img src={SoloLearnNewsLogo} className='sololearnNewsLogo' alt="SoloLearnNews"/>
-                <Pin
-                    unPin = { this.handleUnpin }
-                    items ={ pinnedNews }/>
-                <Feed 
-                    news = { news } 
-                />
-                {isScrolling && (
-                    <NewsLoader/>
-                )}
+        return (         
+            <NewsContext.Provider value={{
+                unPin:this.handleUnpin,
+                items:pinnedNews,
+                news:news,
+            }}>          
+                <div className='container'>
+                    <ToastContainer />
+                    <img src={SoloLearnNewsLogo} className='sololearnNewsLogo' alt="SoloLearnNews"/>
+                    <Pin/>
+                    <Feed/>
+                    {
+                        !news.length && (
+                            <div className='no_news'>
+                                <span>NO NEWS</span>
+                            </div>
+                        )
+                    }
+                    {isScrolling && (
+                        <NewsLoader/>
+                    )}
 
-                <div 
-                    role='presentation'
-                    onClick={this.scrollToTop}
-                    className={`scroll_top ${showScrollTop ? 'show_scroll_top' : ''}`}
-                >
-                      <img src={ArrowTopIcon } alt=""/>
-                </div>
-
-            </div>         
+                    <div
+                        role='presentation'
+                        onClick ={this.scrollToTop}
+                        className={`scroll_top ${showScrollTop ? 'show_scroll_top' : ''}`}>
+                        <img src={ArrowTopIcon } alt=""/>
+                    </div>
+                </div>   
+            </NewsContext.Provider>      
         )
     }
 }

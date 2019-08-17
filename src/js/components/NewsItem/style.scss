@@ -1,13 +1,18 @@
 
 .feed_item {
     margin:15px;
+    min-height: 250px;
     box-shadow: 0px 0px 10px 5px #2f1f1f;
     position: relative;
     cursor: pointer;
+
+    .image {
+        min-height: 174px;
+    }
     .pinned_helper {
         display: flex;
         width: max-content;
-        background: #87ca0a;
+        background: #158e9b;
         color: #fff;
         transform: rotate(90deg);
         position: absolute;
@@ -41,19 +46,29 @@
     position: relative;
 }
 
-.unread {
-    display: block;
-    padding: 5px;
-    border-radius: 50%;
-    background: #08f908;
-    border: 1px solid #cccccc;
+.unread_icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    .unread_text {
+        margin-right: 5px;
+    }
+    .unread {
+        display: block;
+        padding: 5px;
+        border-radius: 50%;
+        background: #6973ff;
+        border: 1px solid #cccccc;   
+    }
 }
+
 
 .read {
     display: block;
     padding: 5px;
     border-radius: 50%;
-    background: orange;
+    background: #08f908;
     border: 1px solid #cccccc;
 }
 
