@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Card, Image } from 'semantic-ui-react';
 import PinImage from 'assets/icons/pin.png';
-import Logo from 'assets/images/logo.jpg'
+import Logo from 'assets/images/logo.jpg';
 import './style.scss';
 
 
@@ -24,8 +24,7 @@ class PinItem extends Component  {
         e.preventDefault();
         this.setState({
             removePin:true
-        }, ()=>{
-           
+        }, ()=>{   
             setTimeout(()=>{
                 this.props.unPin(id);
                 this.setState({
