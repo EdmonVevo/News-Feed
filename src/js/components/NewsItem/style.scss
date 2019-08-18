@@ -1,7 +1,7 @@
-
 .feed_item {
-    margin:15px;
+    margin: 15px;
     min-height: 250px;
+    -webkit-box-shadow: 0px 0px 10px 5px #2f1f1f;
     box-shadow: 0px 0px 10px 5px #2f1f1f;
     position: relative;
     cursor: pointer;
@@ -9,11 +9,17 @@
     .image {
         min-height: 174px;
     }
+
     .pinned_helper {
+        display: -webkit-box;
+        display: -ms-flexbox;
         display: flex;
+        width: -webkit-max-content;
+        width: -moz-max-content;
         width: max-content;
         background: #158e9b;
         color: #fff;
+        -webkit-transform: rotate(90deg);
         transform: rotate(90deg);
         position: absolute;
         z-index: 20;
@@ -22,16 +28,19 @@
         top: 27px;
         border-radius: 5px;
     }
+
     * {
         -moz-user-select: none;
-        -webkit-user-select: none; 
-        -ms-user-select:none; 
-        user-select:none;
-        -o-user-select:none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        -o-user-select: none;
     }
 }
 
 .category {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
 }
 
@@ -40,26 +49,39 @@
 }
 
 .feed_item_read {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
     justify-content: space-between;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
     align-items: center;
     position: relative;
 }
 
 .unread_icon {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
     justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
     align-items: center;
-    
+
     .unread_text {
         margin-right: 5px;
     }
+
     .unread {
         display: block;
         padding: 5px;
         border-radius: 50%;
         background: #6973ff;
-        border: 1px solid #cccccc;   
+        border: 1px solid #cccccc;
     }
 }
 
@@ -76,6 +98,7 @@
     color: #089600;
     font-weight: bold;
     font-size: 20px;
+    -webkit-transform: rotate(30deg);
     transform: rotate(30deg);
     position: absolute;
     right: 36px;

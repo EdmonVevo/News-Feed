@@ -1,10 +1,18 @@
 .pinned_item {
     min-width: 155px;
     width: 111px;
+    height: -webkit-max-content;
+    height: -moz-max-content;
     height: max-content;
-    margin:0 15px;
+    margin: 0 15px;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
     justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
     align-items: center;
     position: relative;
 }
@@ -15,7 +23,9 @@
     top: -4px;
     right: -18px;
     z-index: 9999;
+    -webkit-animation: shake 300ms infinite;
     animation: shake 300ms infinite;
+    -webkit-transition: 400ms all ease;
     transition: 400ms all ease;
 }
 
@@ -24,16 +34,32 @@
     position: absolute;
     top: -16px;
     right: -40px;
+    -webkit-transform: rotate(20deg);
     transform: rotate(20deg);
+    -webkit-transition: 400ms all ease;
     transition: 400ms all ease;
+}
+
+@-webkit-keyframes shake {
+    from {
+        -webkit-transform: rotate(-5deg);
+        transform: rotate(-5deg);
+    }
+
+    to {
+        -webkit-transform: rotate(5deg);
+        transform: rotate(5deg);
+    }
 }
 
 @keyframes shake {
     from {
-        transform:rotate(-5deg);
+        -webkit-transform: rotate(-5deg);
+        transform: rotate(-5deg);
     }
 
     to {
-        transform:rotate(5deg);
+        -webkit-transform: rotate(5deg);
+        transform: rotate(5deg);
     }
 }
