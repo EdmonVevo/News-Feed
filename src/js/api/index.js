@@ -1,8 +1,6 @@
 import axios from 'axios';
 
-
-const apiKey = 'f7224cda-042a-4939-b230-615e9b4cc84f';
-// const apiKey = 'test';
+const apiKey = 'test';
 const params = {
     'api-key': apiKey,
     'show-fields':'all',
